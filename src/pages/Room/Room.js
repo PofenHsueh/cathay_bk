@@ -4,6 +4,7 @@ import * as Style from './Style';
 import useHandList from '../../hooks/useHandList';
 import useAuth from '../../hooks/useAuth';
 import useControlBtn from '../../hooks/useControlBtn';
+import useDebounceAction from '../../hooks/useDebounceAction'
 import { CloseCircleOutlined } from '@ant-design/icons';
 import { Button } from 'antd';
 
@@ -16,9 +17,9 @@ const Room = () => {
   let lastClick = 0;
 
 
-
   const handleRaiseHandEvent = async()=>{
-    const now = Date.now()
+    const now = Date.now();
+    // console.log(now - lastClick ,'now - lastClick ')
     if (now - lastClick < 1000) return 
     const role =localStorage.getItem('role');
     try{
@@ -28,6 +29,7 @@ const Room = () => {
       console.log(e,'handleRaiseHandEvent')
     }
   }
+  const [debouncedSubmit, isPending] = useDebounceAction(handleRaiseHandEvent, 800);
 
   const handleLogout = async(isAdmin) => {
     if(isAdmin){
@@ -65,7 +67,7 @@ const Room = () => {
             重新輸入暱稱
             </Button>}
             {(localStorage.getItem('role')!=='admin_team') ? (
-              <Style.RaiseHandBtn onClick={() => handleRaiseHandEvent()} disabled={!controlEvent?.isAction}>
+              <Style.RaiseHandBtn onClick={() => debouncedSubmit()} disabled={!controlEvent?.isAction}>
                 ✋ 舉手！
               </Style.RaiseHandBtn>
             ) : (
