@@ -1,32 +1,48 @@
-import React,{ useEffect, useState }  from 'react';
+import { useEffect }  from 'react';
 import { useNavigate } from 'react-router';
 import * as Style from './Style';
 import useHandList from '../../hooks/useHandList';
 import useAuth from '../../hooks/useAuth';
-
+import useControlBtn from '../../hooks/useControlBtn';
+import { CloseCircleOutlined } from '@ant-design/icons';
+import { Button } from 'antd';
 
 const Room = () => {
-  // const [isAction,setIsAction] = useState(false) 
   const raiseHandEvent = useHandList();
   const adminLogin = useAuth();
+  const controlEvent = useControlBtn();
+
   const navigate = useNavigate();
+  let lastClick = 0;
 
 
 
   const handleRaiseHandEvent = async()=>{
+    const now = Date.now()
+    if (now - lastClick < 1000) return 
     const role =localStorage.getItem('role');
-    await raiseHandEvent.raiseHand(role);
-    // setIsAction(false);
+    try{
+      await raiseHandEvent.raiseHand(role);
+      await controlEvent.handleActiveEvent(false);
+    }catch(e){
+      console.log(e,'handleRaiseHandEvent')
+    }
   }
 
-  const handleLogout = async() => {
-    await adminLogin.handleLogout();
+  const handleLogout = async(isAdmin) => {
+    if(isAdmin){
+      await adminLogin.handleLogout();
+    }
     localStorage.removeItem('role');
     navigate('/login');
   }
 
   const handleClearAll = async () =>{
     await raiseHandEvent.clearAll();
+  }
+
+  const handleStart = async(status) =>{
+    await controlEvent.handleActiveEvent(status);
   }
 
 
@@ -40,21 +56,25 @@ const Room = () => {
     <>
       <Style.GlobalStyle />
       <Style.FullPageContainer>
-        <Style.MainContent>
+        <Style.MainContent role={localStorage.getItem('role')==='admin_team'}>
 
           {/* 行動區域 */}
           <Style.ActionWrapper>
+            {localStorage.getItem('role')!=='admin_team'&&
+            <Button icon={<CloseCircleOutlined />} size='large' type="ghost" className='close' onClick={()=>handleLogout(false)}>
+            重新輸入暱稱
+            </Button>}
             {(localStorage.getItem('role')!=='admin_team') ? (
-              <Style.RaiseHandBtn onClick={() => handleRaiseHandEvent()} >
+              <Style.RaiseHandBtn onClick={() => handleRaiseHandEvent()} disabled={!controlEvent?.isAction}>
                 ✋ 舉手！
               </Style.RaiseHandBtn>
             ) : (
               <div>
               <Style.AdminControlGroup>
                 <Style.ClearBtn onClick={() => handleClearAll()}>清除</Style.ClearBtn>
-                <Style.StartBtn >開始</Style.StartBtn>
+                <Style.StartBtn onClick={()=>handleStart(true)} disabled={controlEvent?.isAction}>開始</Style.StartBtn>
               </Style.AdminControlGroup>
-              <Style.LogoutBtn onClick={()=>handleLogout()}>Logout</Style.LogoutBtn>
+              <Style.LogoutBtn onClick={()=>handleLogout(true)}>Logout</Style.LogoutBtn>
               </div>
             )}
           </Style.ActionWrapper>

@@ -20,8 +20,10 @@ export const FullPageContainer = styled.div`
 
 
 export const MainContent = styled.main`
+  padding: ${(props) => (props.role ? '40px 20px' : '0px 20px 40px 20px')};
+    // padding: ${(props) =>( console.log(props.role))};
+
   flex: 1;
-  padding: 40px 20px;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -40,6 +42,15 @@ export const ActionWrapper = styled.div`
   width: 100%;
   max-width: 600px; /* 在大螢幕限制最大寬度以維持美感，但在手機會填滿 */
   margin-bottom: 40px;
+  > .close{
+    width:100%;
+    cursor:point;
+    justify-content: right;
+
+    &:hover{
+      color:red;
+    }
+  }
 `;
 
 export const RaiseHandBtn = styled.button`
@@ -113,6 +124,11 @@ export const StartBtn = styled(ClearBtn)`
   background-color: #6fb56f; /* 實心綠色 */
   color: white;
   font-weight: bold;
+  &:disabled{
+    cursor: none;
+    background:grey;
+    transform: none;
+  }
 `;
 
 
