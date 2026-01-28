@@ -1,3 +1,13 @@
+:root {
+  --primary-green: #2d8a54;
+  /* 深綠 */
+  --light-green: #59b379;
+  /* 中綠 */
+  --bg-gradient-start: #f4f9f4;
+  /* 極淺綠背景 */
+  --bg-gradient-end: #ffffff;
+}
+
 .App {
   text-align: center;
 }
@@ -32,6 +42,7 @@
   from {
     transform: rotate(0deg);
   }
+
   to {
     transform: rotate(360deg);
   }
