@@ -6,7 +6,7 @@ import useAuth from '../../hooks/useAuth';
 
 
 const Room = () => {
-  const [isAction,setIsAction] = useState(false) 
+  // const [isAction,setIsAction] = useState(false) 
   const raiseHandEvent = useHandList();
   const adminLogin = useAuth();
   const navigate = useNavigate();
@@ -16,7 +16,7 @@ const Room = () => {
   const handleRaiseHandEvent = async()=>{
     const role =localStorage.getItem('role');
     await raiseHandEvent.raiseHand(role);
-    setIsAction(false);
+    // setIsAction(false);
   }
 
   const handleLogout = async() => {
@@ -45,14 +45,14 @@ const Room = () => {
           {/* 行動區域 */}
           <Style.ActionWrapper>
             {(localStorage.getItem('role')!=='admin_team') ? (
-              <Style.RaiseHandBtn onClick={() => handleRaiseHandEvent()} disabled={!isAction}>
+              <Style.RaiseHandBtn onClick={() => handleRaiseHandEvent()} >
                 ✋ 舉手！
               </Style.RaiseHandBtn>
             ) : (
               <div>
               <Style.AdminControlGroup>
                 <Style.ClearBtn onClick={() => handleClearAll()}>清除</Style.ClearBtn>
-                <Style.StartBtn onClick={(()=>setIsAction(true))}>開始</Style.StartBtn>
+                <Style.StartBtn >開始</Style.StartBtn>
               </Style.AdminControlGroup>
               <Style.LogoutBtn onClick={()=>handleLogout()}>Logout</Style.LogoutBtn>
               </div>
