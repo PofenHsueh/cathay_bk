@@ -36,6 +36,7 @@ const Room = () => {
       await adminLogin.handleLogout();
     }
     localStorage.removeItem('role');
+    localStorage.removeItem('id');
     navigate('/login');
   }
 
@@ -73,7 +74,7 @@ const Room = () => {
             重新輸入暱稱
             </Button>}
             {(localStorage.getItem('role')!=='admin_team') ? (
-              <Style.RaiseHandBtn onClick={() => debouncedSubmit()} disabled={!controlEvent?.isAction}>
+              <Style.RaiseHandBtn onClick={() => debouncedSubmit()} disabled={!controlEvent?.isAction && raiseHandEvent.isClick}>
                 ✋ 舉手！
               </Style.RaiseHandBtn>
             ) : (
