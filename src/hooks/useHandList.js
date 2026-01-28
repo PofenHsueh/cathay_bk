@@ -9,7 +9,7 @@ const useHandList = () => {
     const { data } = await supabase
       .from('hand_raises')
       .select('*')
-      .order('created_at', { ascending: false });
+      .order('created_at', { ascending: true });
     setList(data || []);
   };
 

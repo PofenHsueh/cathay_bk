@@ -47,6 +47,12 @@ const Room = () => {
     await controlEvent.handleActiveEvent(status);
   }
 
+  const formatDate = (data) =>{
+    const date = new Date(data);
+    const formatted = date.toLocaleString('zh-TW', { timeZone: 'Asia/Taipei' });
+    return formatted;
+  }
+
 
   useEffect(()=>{
     if(!localStorage.getItem('role')){
@@ -91,7 +97,7 @@ const Room = () => {
                 <Style.NameGroup>
                   <span>{s.username}</span>
                 </Style.NameGroup>
-                <Style.TimeText>{s.created_at}</Style.TimeText>
+                <Style.TimeText>{formatDate(s.created_at)}</Style.TimeText>
               </Style.ListItem>
             ))}
           </Style.ListSection>
