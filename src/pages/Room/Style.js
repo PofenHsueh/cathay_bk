@@ -82,6 +82,11 @@ export const ListSection = styled.section`
   border-top: 1px solid #f0f0f0;
   padding-top: 20px;
   overflow:scroll;
+  -ms-overflow-style: none;  /* IE and Edge */
+  scrollbar-width: none;  /* Firefox */
+  ::-webkit-scrollbar {
+    display: none; /* Chrome, Safari and Opera */
+  }
 `;
 
 export const ListTitleRow = styled.div`
