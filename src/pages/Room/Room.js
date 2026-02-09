@@ -14,13 +14,9 @@ const Room = () => {
   const controlEvent = useControlBtn();
 
   const navigate = useNavigate();
-  let lastClick = 0;
 
 
   const handleRaiseHandEvent = async()=>{
-    const now = Date.now();
-    // console.log(now - lastClick ,'now - lastClick ')
-    if (now - lastClick < 1000) return 
     const role =localStorage.getItem('role');
     try{
       await raiseHandEvent.raiseHand(role);
@@ -29,7 +25,7 @@ const Room = () => {
       console.log(e,'handleRaiseHandEvent')
     }
   }
-  const [debouncedSubmit, isPending] = useDebounceAction(handleRaiseHandEvent, 800);
+  const [debouncedSubmit] = useDebounceAction(handleRaiseHandEvent, 1000);
 
   const handleLogout = async(isAdmin) => {
     if(isAdmin){
