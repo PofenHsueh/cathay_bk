@@ -103,7 +103,7 @@ const Room = () => {
             </Style.ListTitleRow>
             {raiseHandEvent?.list?.map((s,index) => (
               <Style.ListItem key={s.id} $isFirst={index === 0}>
-                <Style.NameGroup>
+                <Style.NameGroup $isFirst={index === 0}>
                   <span>{s.username}</span>
                 </Style.NameGroup>
                 <Style.TimeText>{formatDate(s.created_at)}</Style.TimeText>

@@ -21,7 +21,6 @@ export const FullPageContainer = styled.div`
 
 export const MainContent = styled.main`
   padding: ${(props) => (props.role ? '40px 20px' : '0px 20px 40px 20px')};
-    // padding: ${(props) =>( console.log(props.role))};
 
   flex: 1;
   display: flex;
@@ -166,6 +165,7 @@ export const FirstPlaceItem = styled.div`
   border-radius: 15px;
   width: 100px;
   border: 2px solid #ffd700;
+
   
   /* 引用定義好的動畫變數 */
   animation: ${float} 2s infinite ease-in-out;
@@ -176,8 +176,8 @@ export const NameGroup = styled.div`
   display: flex;
   align-items: center;
   gap: 12px;
-  font-size: 18px;
   color: #333;
+  font-size: ${(props) => (props.$isFirst ? '40px' : '18px')};
 `;
 
 export const TimeText = styled.span`
