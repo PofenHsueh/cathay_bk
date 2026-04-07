@@ -7,6 +7,8 @@ import useControlBtn from '../../hooks/useControlBtn';
 import useDebounceAction from '../../hooks/useDebounceAction'
 import { CloseCircleOutlined } from '@ant-design/icons';
 import { Button } from 'antd';
+import Count from '../../components/Count/Count';
+
 
 const Room = () => {
   const raiseHandEvent = useHandList();
@@ -44,6 +46,10 @@ const Room = () => {
     await controlEvent.handleActiveEvent(status);
   }
 
+  const handleCountDown = async(status) =>{
+    await controlEvent.handleCountDownEvent(status)
+  }
+
   const formatDate = (data) =>{
     const date = new Date(data);
     const formatted = date.toLocaleString('zh-TW', { timeZone: 'Asia/Taipei' });
@@ -57,10 +63,16 @@ const Room = () => {
     }
   },[])
 
+  const handleCountDownStart = async()=>{
+    await handleStart(true);
+    await controlEvent.handleCountDownEvent(false);
+  }
+
   return (
     <>
       <Style.GlobalStyle />
-      <Style.FullPageContainer>
+     {controlEvent?.isCounted && <Count testC={()=>handleCountDownStart()}></Count>}
+     {!controlEvent?.isCounted &&<Style.FullPageContainer>
         <Style.MainContent role={localStorage.getItem('role')==='admin_team'}>
 
           {/* 行動區域 */}
@@ -77,7 +89,7 @@ const Room = () => {
               <div>
               <Style.AdminControlGroup>
                 <Style.ClearBtn onClick={() => handleClearAll()}>清除</Style.ClearBtn>
-                <Style.StartBtn onClick={()=>handleStart(true)} disabled={controlEvent?.isAction}>開始</Style.StartBtn>
+                <Style.StartBtn onClick={()=>handleCountDown(true)} disabled={controlEvent?.isAction}>開始</Style.StartBtn>
               </Style.AdminControlGroup>
               <Style.LogoutBtn onClick={()=>handleLogout(true)}>Logout</Style.LogoutBtn>
               </div>
@@ -99,7 +111,7 @@ const Room = () => {
             ))}
           </Style.ListSection>
         </Style.MainContent>
-      </Style.FullPageContainer>
+      </Style.FullPageContainer>}
     </>
   
   );

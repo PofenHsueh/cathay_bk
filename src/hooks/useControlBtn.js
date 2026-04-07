@@ -2,7 +2,8 @@ import { useEffect, useState } from 'react';
 import { supabase } from '../client/Client';
 
 const useControlBtn = () => {
-  const [isAction,setIsAction] = useState(false) 
+  const [isAction,setIsAction] = useState(false);
+  const [isCounted,setIsCounted] = useState(false);
 
   // 1. 初始抓取資料
   const fetchList = async () => {
@@ -10,6 +11,7 @@ const useControlBtn = () => {
       .from('hand_raise_control')
       .select('*');
       setIsAction(data?.[0]?.is_started);
+      setIsCounted(data?.[0]?.is_counted);
   };
 
   useEffect(() => {
@@ -34,7 +36,13 @@ const useControlBtn = () => {
     .eq('id', 1);
   };
 
+  const handleCountDownEvent = async (status) => {
+    console.log('faaa')
+    await supabase.from('hand_raise_control').update({ is_counted: status })
+    .eq('id', 1);
+  }
 
-  return { handleActiveEvent , isAction};
+
+  return { handleActiveEvent , isAction, handleCountDownEvent,isCounted};
 }
 export default useControlBtn;
