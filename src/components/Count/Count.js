@@ -14,7 +14,7 @@ const Count = ({testC}) => {
 
     const t = setTimeout(() => {
       setAnimate(false);
-    }, 500);
+    }, 300);
 
     return () => clearTimeout(t);
   }, [count, active]);

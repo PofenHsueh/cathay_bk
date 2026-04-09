@@ -91,7 +91,7 @@ const Room = () => {
                 <Style.ClearBtn onClick={() => handleClearAll()}>清除</Style.ClearBtn>
                 <Style.StartBtn onClick={()=>handleCountDown(true)} disabled={controlEvent?.isAction}>開始</Style.StartBtn>
               </Style.AdminControlGroup>
-              <Style.LogoutBtn onClick={()=>handleLogout(true)}>Logout</Style.LogoutBtn>
+              <Style.LogoutBtn onClick={()=>handleLogout(true)}>登出</Style.LogoutBtn>
               </div>
             )}
           </Style.ActionWrapper>

@@ -53,6 +53,7 @@ export const ActionWrapper = styled.div`
 `;
 
 export const RaiseHandBtn = styled.button`
+  margin-top:20px;
   width: 100%;
   padding: 18px;
   border: none;

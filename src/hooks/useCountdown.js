@@ -14,7 +14,7 @@ export const useCountdown = (start = 3, onFinish) => {
 
     const timer = setTimeout(() => {
       setCount((prev) => prev - 1);
-    }, 1000);
+    }, 500);
 
     return () => clearTimeout(timer);
   }, [count, active, onFinish]);
